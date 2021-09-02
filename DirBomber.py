@@ -11,13 +11,12 @@ content = file.read()
 directories = content.splitlines()
 
 for dir in directories:
-    
-    url = f"http://{domain}:3333/{dir}"
-    try:
 
-        requests.get(url)
-        print("[*] Discovered Directory:", url)
+    response = requests.get(f"http://{domain}/{dir}")
+    url = f"http://{domain}/{dir}"
 
-    except requests.ConnectionError:
+    if response.status_code == 200:
+        print("[*] Discoverd Directory:",url)
 
-        pass
+    elif response.status_code == 404:
+        pass 
